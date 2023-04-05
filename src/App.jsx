@@ -19,7 +19,7 @@ function App() {
   const [itemsByDate, setItemsByDate] = useState({});
   useEffect(() => {
     const newDate = new Date();
-    const today = `${newDate.getFullYear}.${newDate.getMonth + 1}.${newDate.getDay}`;
+    const today = `${newDate.getFullYear}.${newDate.getMonth + 1}.${newDate.getDate}`;
     const initialItems = {};
     initialItems[today] = [];
     setItemsByDate(Object.assign(itemsByDate, initialItems));

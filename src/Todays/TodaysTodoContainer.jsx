@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import OpenColor from 'open-color';
 
@@ -33,15 +33,40 @@ const Title = styled.div`
 function TodaysTodoContainer({
   date, setDate, itemsByDate, setItemsByDate,
 }) {
+  const dateString = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+  const [todos, setTodos] = useState(itemsByDate[dateString]);
+  useEffect(() => {
+    if (itemsByDate[dateString] === undefined) {
+      const newObj = {};
+      newObj[dateString] = [];
+      setItemsByDate(Object.assign(itemsByDate, newObj));
+    }
+    setTodos(itemsByDate[dateString]);
+  }, [date]);
+
+  useEffect(() => {
+    const newObj = {};
+    newObj[dateString] = todos;
+    setItemsByDate(Object.assign(itemsByDate, newObj));
+  }, [todos]);
+
+  const handleLeftButtonClick = () => {
+    setDate(new Date(date.setDate(date.getDate() - 1)));
+  };
+
+  const handleRightButtonClick = () => {
+    setDate(new Date(date.setDate(date.getDate() + 1)));
+  };
   return (
     <Wrapper>
       <TitleWrapper>
-        <Button>{'<'}</Button>
+        <Button onClick={handleLeftButtonClick}>{'<'}</Button>
         <Title>
-          {`To do - ${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`}
+          {`To do - ${dateString}`}
         </Title>
-        <Button>{'>'}</Button>
+        <Button onClick={handleRightButtonClick}>{'>'}</Button>
       </TitleWrapper>
+
     </Wrapper>
   );
 }
