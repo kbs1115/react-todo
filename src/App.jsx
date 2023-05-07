@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TodoContainer from './Todos/TodoContainer';
 import TodaysTodoContainer from './Todays/TodaysTodoContainer';
+import CreateTodaysTodo from './Todays/CreateTodaysTodo';
 import GlobalStyle from './GlobalStyle';
 
 const Wrapper = styled.div`
@@ -34,7 +35,7 @@ function App() {
           setDate={setDate}
           itemsByDate={itemsByDate}
           setItemsByDate={setItemsByDate}
-        />
+        ><CreateTodaysTodo /></TodaysTodoContainer>
         <TodoContainer todos={todos} setTodos={setTodos} />
       </Wrapper>
     </>

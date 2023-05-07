@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import CreateTodos from './CreateTodos';
+import TodoList from './TodoList';
 
 const Wrapper = styled.div`
   width : 800px;
@@ -8,6 +10,7 @@ const Wrapper = styled.div`
   padding: 2% 2%;
   border-radius: 20px;
   background: white;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -15,8 +18,14 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-function TodoContainer() {
-  return <Wrapper><Title>Todos</Title></Wrapper>;
+function TodoContainer({ children }) {
+  return (
+    <Wrapper>
+      <Title>Todos</Title>
+      <TodoList />
+      <CreateTodos />
+    </Wrapper>
+  );
 }
 
 export default TodoContainer;
