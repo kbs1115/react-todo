@@ -9,13 +9,12 @@ const TodoListBlock = styled.div`
   overflow-y: auto;
 `;
 
-function TodaysTodoList() {
+function TodaysTodoList({ todos, onRemove }) {
   return (
     <TodoListBlock>
-      <TodaysTodoItem text="프로젝트 생성하기" done={true} />
-      <TodaysTodoItem text="컴포넌트 스타일링 하기" done={true} />
-      <TodaysTodoItem text="Context 만들기" done={false} />
-      <TodaysTodoItem text="기능 구현하기" done={false} />
+      {todos && todos.map(todo => (
+        <TodaysTodoItem todo={todo} key={todo.id} onRemove={onRemove}/>
+      ))}
     </TodoListBlock>
   );
 }

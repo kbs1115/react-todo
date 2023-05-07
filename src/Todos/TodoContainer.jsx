@@ -44,7 +44,7 @@ function TodoContainer({ todos, setTodos }) {
     setInputs({
       text: '',
       date: ''
-    })
+    });
     nextId.current += 1;
   };
 

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import OpenColor from 'open-color';
 import TodaysTodoList from './TodaysTodoList';
+import CreateTodaysTodo from './CreateTodaysTodo';
 
 const Wrapper = styled.div`
   width : 800px;
@@ -33,10 +34,14 @@ const Title = styled.div`
 `;
 
 function TodaysTodoContainer({
-  date, setDate, itemsByDate, setItemsByDate, children
+  date, setDate, itemsByDate, setItemsByDate
 }) {
   const dateString = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
   const [todos, setTodos] = useState(itemsByDate[dateString]);
+  const [input, setInput] = useState('');
+  const nextId = useRef(1);
+  
+
   useEffect(() => {
     if (itemsByDate[dateString] === undefined) {
       const newObj = {};
@@ -59,6 +64,26 @@ function TodaysTodoContainer({
   const handleRightButtonClick = () => {
     setDate(new Date(date.setDate(date.getDate() + 1)));
   };
+
+  const onChange = e => {
+    const value = e.target.value;
+    setInput(value);
+  };
+
+  const onCreate = () => {
+    const newTodo = {
+      id: nextId.current,
+      text: input
+    };
+    setTodos([...todos, newTodo]);
+    nextId.current += 1;
+    setInput('');
+  }
+
+  const onRemove = id => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  }
+
   return (
     <Wrapper>
       <TitleWrapper>
@@ -68,8 +93,8 @@ function TodaysTodoContainer({
         </Title>
         <Button onClick={handleRightButtonClick}>{'>'}</Button>
       </TitleWrapper>
-    <TodaysTodoList />
-    { children }
+    <TodaysTodoList onRemove={onRemove} todos={todos}/>
+    <CreateTodaysTodo onChange={onChange} onCreate={onCreate} text={input}/>
     </Wrapper>
   );
 }

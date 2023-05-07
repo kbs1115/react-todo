@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md'
 
 const CreateButton = styled.button`
@@ -62,15 +62,15 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-function CreateTodaysTodo() {
+function CreateTodaysTodo({ onChange, onCreate, text }) {
     return (
         <>
         <InsertFormPositioner>
           <InsertForm>
-            <Input autoFocus placeholder='해당 날짜의 Todo를 입력하세요.'/>
+            <Input autoFocus placeholder='해당 날짜의 Todo를 입력하세요.' onChange={onChange} value={text}/>
           </InsertForm>
         </InsertFormPositioner>
-        <CreateButton>
+        <CreateButton onClick={onCreate}>
           <MdAdd />
         </CreateButton>
         </> 
