@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import CreateTodos from './CreateTodos';
 import TodoList from './TodoList';
@@ -18,12 +18,45 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-function TodoContainer({ children }) {
+function TodoContainer({ todos, setTodos }) {
+  const nextId = useRef(1);
+  const [inputs, setInputs] = useState({
+    text: '',
+    date: ''
+  });
+  const { text, date } = inputs;
+
+  const onChange = e => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value
+    });
+  };
+
+  const onCreate = () => {
+    const newTodo = {
+      id: nextId.current,
+      text,
+      date
+    };
+    setTodos([...todos, newTodo]);
+    setInputs({
+      text: '',
+      date: ''
+    })
+    nextId.current += 1;
+  };
+
+  const onRemove = id => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  }
+
   return (
     <Wrapper>
       <Title>Todos</Title>
-      <TodoList />
-      <CreateTodos />
+      <TodoList todos={todos} onRemove={onRemove}/>
+      <CreateTodos onChange={onChange} onCreate={onCreate} text={text} date={date}/>
     </Wrapper>
   );
 }

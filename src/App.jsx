@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import TodoContainer from './Todos/TodoContainer';
 import TodaysTodoContainer from './Todays/TodaysTodoContainer';
@@ -18,6 +18,7 @@ function App() {
   const [date, setDate] = useState(new Date());
   const [todos, setTodos] = useState([]);
   const [itemsByDate, setItemsByDate] = useState({});
+
   useEffect(() => {
     const newDate = new Date();
     const today = `${newDate.getFullYear}.${newDate.getMonth + 1}.${newDate.getDate}`;
@@ -35,7 +36,7 @@ function App() {
           setDate={setDate}
           itemsByDate={itemsByDate}
           setItemsByDate={setItemsByDate}
-        ><CreateTodaysTodo /></TodaysTodoContainer>
+        />
         <TodoContainer todos={todos} setTodos={setTodos} />
       </Wrapper>
     </>

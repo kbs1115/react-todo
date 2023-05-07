@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md'
 
 const CreateButton = styled.button`
@@ -72,16 +72,16 @@ const DateInput = styled.input`
   margin-left: 10px;
 `;
 
-function CreateTodos() {
+function CreateTodos({ text, date, onChange, onCreate }) {
     return (
         <>
         <InsertFormPositioner>
           <InsertForm>
-            <Input autoFocus placeholder='Todo를 입력하세요.'/>
-            <DateInput placeholder='날짜' />
+            <Input autoFocus name="text" placeholder='Todo를 입력하세요.' onChange={onChange} value={text}/>
+            <DateInput name="date" placeholder='날짜' onChange={onChange} value={date}/>
           </InsertForm>
         </InsertFormPositioner>
-        <CreateButton>
+        <CreateButton onClick={onCreate}>
           <MdAdd />
         </CreateButton>
         </> 

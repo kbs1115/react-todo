@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdStar } from 'react-icons/md';
 
@@ -21,9 +21,12 @@ const Star = styled.div`
   color: #dee2e6;
   font-size: 24px;
   cursor: pointer;
-  &:hover {
-    color: yellow;
-  }
+  
+  ${props =>
+    props.star &&
+    css`
+      color: yellow;
+    `}
 `;
 
 const TodoItemBlock = styled.div`
@@ -63,15 +66,32 @@ const Text = styled.div`
     `}
 `;
 
-function TodoItem({ id, done, text }) {
+const Date = styled.div`
+  flex: 1;
+  font-size: 16px;
+  color: #495057;
+  ${props =>
+    props.done &&
+    css`
+      color: #ced4da;
+    `}
+`;
+
+function TodoItem({ todo, onRemove }) {
+  const [done, setDone] = useState(false);
+  const [star, setStar] = useState(false);
+
+
+
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
-      <Text done={done}>{text}</Text>
-      <Star>
+      <CheckCircle done={done} onClick={() => setDone(!done)}>{done && <MdDone />}</CheckCircle>
+      <Text done={done}>{todo.text}</Text>
+      <Date done={done}>~{todo.date}</Date>
+      <Star onClick={() => setStar(!star)} star={star}>
         <MdStar />
       </Star>
-      <Remove>
+      <Remove onClick={() => onRemove(todo.id)}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
