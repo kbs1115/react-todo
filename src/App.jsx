@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import TodoContainer from './Todos/TodoContainer';
 import TodaysTodoContainer from './Todays/TodaysTodoContainer';
-import CreateTodaysTodo from './Todays/CreateTodaysTodo';
 import GlobalStyle from './GlobalStyle';
 
 const Wrapper = styled.div`

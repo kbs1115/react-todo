@@ -66,15 +66,58 @@ const Text = styled.div`
     `}
 `;
 
-function TodaysTodoItem({ todo, onRemove }) {
-  const [done, setDone] = useState(false);
-  const [star, setStar] = useState(false);
+function TodaysTodoItem({ todo, todos, onRemove, setTodos }) {
+  const changeStar = (id) => {
+    let newTodos = todos.map(todo =>
+      todo.id === id ? {...todo, star: !todo.star} : todo)
+      newTodos = newTodos.sort((a, b) => {
+        let arr = [0, 0];
+        if(a.star === true){
+          arr[0] -= 10;
+        }
+        if(b.star === true){
+          arr[1] -= 10;
+        }
+        if(a.done === true){
+          arr[0] += 30;
+        }
+        if(b.done === true){
+          arr[1] += 30;
+        }
+  
+        return arr[0] - arr[1];
+      });
+      setTodos(newTodos);
+  };
+
+  const changeDone = (id) => {
+    let newTodos = todos.map(todo =>
+      todo.id === id ? {...todo, done: !todo.done} : todo)
+      newTodos = newTodos.sort((a, b) => {
+        let arr = [0, 0];
+        if(a.star === true){
+          arr[0] -= 10;
+        }
+        if(b.star === true){
+          arr[1] -= 10;
+        }
+        if(a.done === true){
+          arr[0] += 30;
+        }
+        if(b.done === true){
+          arr[1] += 30;
+        }
+  
+        return arr[0] - arr[1];
+      });
+      setTodos(newTodos);
+  };
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={() => setDone(!done)}>{done && <MdDone />}</CheckCircle>
-      <Text done={done}>{todo.text}</Text>
-      <Star onClick={() => setStar(!star)} star={star}>
+      <CheckCircle done={todo.done} onClick={() => {changeDone(todo.id)}}>{todo.done && <MdDone />}</CheckCircle>
+      <Text done={todo.done}>{todo.text}</Text>
+      <Star onClick={() => {changeStar(todo.id)}} star={todo.star}>
         <MdStar />
       </Star>
       <Remove onClick={() => onRemove(todo.id)}>

@@ -73,9 +73,28 @@ function TodaysTodoContainer({
   const onCreate = () => {
     const newTodo = {
       id: nextId.current,
-      text: input
+      text: input,
+      star: false,
+      done: false
     };
-    setTodos([...todos, newTodo]);
+    let newTodos = [...todos, newTodo];
+    newTodos = newTodos.sort((a, b) => {
+      let arr = [0, 0];
+      if(a.star === true){
+        arr[0] -= 10;
+      }
+      if(b.star === true){
+        arr[1] -= 10;
+      }
+      if(a.done === true){
+        arr[0] += 30;
+      }
+      if(b.done === true){
+        arr[1] += 30;
+      }
+      return arr[0] - arr[1];
+    });
+    setTodos(newTodos);
     nextId.current += 1;
     setInput('');
   }
@@ -93,7 +112,7 @@ function TodaysTodoContainer({
         </Title>
         <Button onClick={handleRightButtonClick}>{'>'}</Button>
       </TitleWrapper>
-    <TodaysTodoList onRemove={onRemove} todos={todos}/>
+    <TodaysTodoList onRemove={onRemove} todos={todos} setTodos={setTodos}/>
     <CreateTodaysTodo onChange={onChange} onCreate={onCreate} text={input}/>
     </Wrapper>
   );

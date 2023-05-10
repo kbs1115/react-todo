@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdStar } from 'react-icons/md';
 
@@ -66,7 +66,7 @@ const Text = styled.div`
     `}
 `;
 
-const Date = styled.div`
+const DateComponent = styled.div`
   flex: 1;
   font-size: 16px;
   color: #495057;
@@ -77,18 +77,69 @@ const Date = styled.div`
     `}
 `;
 
-function TodoItem({ todo, onRemove }) {
-  const [done, setDone] = useState(false);
-  const [star, setStar] = useState(false);
+function TodoItem({ todo, todos, onRemove, setTodos }) {
+  const changeStar = (id) => {
+    let newTodos = todos.map(todo =>
+      todo.id === id ? {...todo, star: !todo.star} : todo)
+      newTodos = newTodos.sort((a, b) => {
+        let arr = [0, 0];
+        if(a.star === true){
+          arr[0] -= 10;
+        }
+        if(b.star === true){
+          arr[1] -= 10;
+        }
+        if(a.done === true){
+          arr[0] += 30;
+        }
+        if(b.done === true){
+          arr[1] += 30;
+        }
+  
+        if(arr[0] === arr[1]){
+          return new Date(a.date) - new Date(b.date);
+        }
+        else{
+          return arr[0] - arr[1];
+        }
+      });
+      setTodos(newTodos);
+  };
 
-
+  const changeDone = (id) => {
+    let newTodos = todos.map(todo =>
+      todo.id === id ? {...todo, done: !todo.done} : todo)
+      newTodos = newTodos.sort((a, b) => {
+        let arr = [0, 0];
+        if(a.star === true){
+          arr[0] -= 10;
+        }
+        if(b.star === true){
+          arr[1] -= 10;
+        }
+        if(a.done === true){
+          arr[0] += 30;
+        }
+        if(b.done === true){
+          arr[1] += 30;
+        }
+  
+        if(arr[0] === arr[1]){
+          return new Date(a.date) - new Date(b.date);
+        }
+        else{
+          return arr[0] - arr[1];
+        }
+      });
+      setTodos(newTodos);
+  };
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={() => setDone(!done)}>{done && <MdDone />}</CheckCircle>
-      <Text done={done}>{todo.text}</Text>
-      <Date done={done}>~{todo.date}</Date>
-      <Star onClick={() => setStar(!star)} star={star}>
+      <CheckCircle done={todo.done} onClick={() => changeDone(todo.id)}>{todo.done && <MdDone />}</CheckCircle>
+      <Text done={todo.done}>{todo.text}</Text>
+      <DateComponent done={todo.done}>~{todo.date}</DateComponent>
+      <Star star={todo.star} onClick={() => changeStar(todo.id)}>
         <MdStar />
       </Star>
       <Remove onClick={() => onRemove(todo.id)}>

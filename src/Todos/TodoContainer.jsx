@@ -38,9 +38,36 @@ function TodoContainer({ todos, setTodos }) {
     const newTodo = {
       id: nextId.current,
       text,
-      date
+      date,
+      star: false,
+      done: false
     };
-    setTodos([...todos, newTodo]);
+    
+    let newTodos = [...todos, newTodo];
+    newTodos = newTodos.sort((a, b) => {
+      let arr = [0, 0];
+      if(a.star === true){
+        arr[0] -= 10;
+      }
+      if(b.star === true){
+        arr[1] -= 10;
+      }
+      if(a.done === true){
+        arr[0] += 30;
+      }
+      if(b.done === true){
+        arr[1] += 30;
+      }
+
+      if(arr[0] === arr[1]){
+        return new Date(a.date) - new Date(b.date);
+      }
+      else{
+        return arr[0] - arr[1];
+      }
+    });
+    setTodos(newTodos);
+
     setInputs({
       text: '',
       date: ''
@@ -55,7 +82,7 @@ function TodoContainer({ todos, setTodos }) {
   return (
     <Wrapper>
       <Title>Todos</Title>
-      <TodoList todos={todos} onRemove={onRemove}/>
+      <TodoList todos={todos} setTodos={setTodos} onRemove={onRemove}/>
       <CreateTodos onChange={onChange} onCreate={onCreate} text={text} date={date}/>
     </Wrapper>
   );

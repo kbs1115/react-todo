@@ -78,7 +78,7 @@ function CreateTodos({ text, date, onChange, onCreate }) {
         <InsertFormPositioner>
           <InsertForm>
             <Input autoFocus name="text" placeholder='Todo를 입력하세요.' onChange={onChange} value={text}/>
-            <DateInput name="date" placeholder='날짜' onChange={onChange} value={date}/>
+            <DateInput type="date" name="date" placeholder='날짜' onChange={onChange} value={date}/>
           </InsertForm>
         </InsertFormPositioner>
         <CreateButton onClick={onCreate}>
