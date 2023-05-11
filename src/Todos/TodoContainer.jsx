@@ -18,7 +18,7 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-function TodoContainer({ todos, setTodos }) {
+function TodoContainer({ todos, setTodos, sendItem }) {
   const nextId = useRef(1);
   const [inputs, setInputs] = useState({
     text: '',
@@ -82,7 +82,7 @@ function TodoContainer({ todos, setTodos }) {
   return (
     <Wrapper>
       <Title>Todos</Title>
-      <TodoList todos={todos} setTodos={setTodos} onRemove={onRemove}/>
+      <TodoList todos={todos} setTodos={setTodos} onRemove={onRemove} sendItem={sendItem}/>
       <CreateTodos onChange={onChange} onCreate={onCreate} text={text} date={date}/>
     </Wrapper>
   );

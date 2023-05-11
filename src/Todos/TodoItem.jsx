@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdStar } from 'react-icons/md';
+import { MdArrowCircleLeft } from 'react-icons/md';
 
 const Remove = styled.div`
   display: flex;
@@ -29,6 +30,18 @@ const Star = styled.div`
     `}
 `;
 
+const Send = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dee2e6;
+  font-size: 24px;
+  cursor: pointer;
+  &:hover {
+    color: green;
+  }
+`;
+
 const TodoItemBlock = styled.div`
   display: flex;
   align-items: center;
@@ -46,6 +59,7 @@ const CheckCircle = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 20px;
+  margin-left: 20px;
   cursor: pointer;
   ${props =>
     props.done &&
@@ -77,7 +91,7 @@ const DateComponent = styled.div`
     `}
 `;
 
-function TodoItem({ todo, todos, onRemove, setTodos }) {
+function TodoItem({ todo, todos, onRemove, setTodos, sendItem }) {
   const changeStar = (id) => {
     let newTodos = todos.map(todo =>
       todo.id === id ? {...todo, star: !todo.star} : todo)
@@ -136,6 +150,7 @@ function TodoItem({ todo, todos, onRemove, setTodos }) {
 
   return (
     <TodoItemBlock>
+      <Send onClick={() => {sendItem(todo.text, todo.star, todo.done); onRemove(todo.id);}}><MdArrowCircleLeft /></Send>
       <CheckCircle done={todo.done} onClick={() => changeDone(todo.id)}>{todo.done && <MdDone />}</CheckCircle>
       <Text done={todo.done}>{todo.text}</Text>
       <DateComponent done={todo.done}>~{todo.date}</DateComponent>

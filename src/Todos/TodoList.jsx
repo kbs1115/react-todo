@@ -9,11 +9,11 @@ const TodoListBlock = styled.div`
   overflow-y: auto;
 `;
 
-function TodoList({ todos, setTodos, onRemove }) {
+function TodoList({ todos, setTodos, onRemove , sendItem }) {
   return (
     <TodoListBlock>
       {todos && todos.map(todo => (
-        <TodoItem todo={todo} todos={todos} key={todo.id} onRemove={onRemove} setTodos={setTodos}/>
+        <TodoItem todo={todo} todos={todos} key={todo.id} onRemove={onRemove} setTodos={setTodos} sendItem={sendItem}/>
       ))}
     </TodoListBlock>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import OpenColor from 'open-color';
 import TodaysTodoList from './TodaysTodoList';
@@ -40,7 +40,6 @@ function TodaysTodoContainer({
   const [todos, setTodos] = useState(itemsByDate[dateString]);
   const [input, setInput] = useState('');
   const nextId = useRef(1);
-  
 
   useEffect(() => {
     if (itemsByDate[dateString] === undefined) {
@@ -53,7 +52,8 @@ function TodaysTodoContainer({
 
   useEffect(() => {
     const newObj = {};
-    newObj[dateString] = todos;
+    const set = new Set(itemsByDate[dateString].concat(todos));
+    newObj[dateString] = [...set];
     setItemsByDate(Object.assign(itemsByDate, newObj));
   }, [todos]);
 
@@ -70,10 +70,10 @@ function TodaysTodoContainer({
     setInput(value);
   };
 
-  const onCreate = () => {
+  const onCreate = (t) => {
     const newTodo = {
       id: nextId.current,
-      text: input,
+      text: t,
       star: false,
       done: false
     };

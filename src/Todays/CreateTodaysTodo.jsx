@@ -70,7 +70,7 @@ function CreateTodaysTodo({ onChange, onCreate, text }) {
             <Input autoFocus placeholder='해당 날짜의 Todo를 입력하세요.' onChange={onChange} value={text}/>
           </InsertForm>
         </InsertFormPositioner>
-        <CreateButton onClick={onCreate}>
+        <CreateButton onClick={() => onCreate(text)}>
           <MdAdd />
         </CreateButton>
         </> 

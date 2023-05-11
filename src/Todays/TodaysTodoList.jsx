@@ -10,6 +10,9 @@ const TodoListBlock = styled.div`
 `;
 
 function TodaysTodoList({ todos, onRemove ,setTodos }) {
+  if(todos === undefined)
+    todos =[];
+  todos = todos.filter(todo => todo !== undefined);
   return (
     <TodoListBlock>
       {todos && todos.map(todo => (
