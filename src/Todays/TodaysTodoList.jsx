@@ -9,14 +9,15 @@ const TodoListBlock = styled.div`
   overflow-y: auto;
 `;
 
-function TodaysTodoList({ todos, onRemove ,setTodos }) {
+function TodaysTodoList({ todos, onRemove ,setTodos, itemsByDate, setItemsByDate, dateString }) {
   if(todos === undefined)
     todos =[];
   todos = todos.filter(todo => todo !== undefined);
   return (
     <TodoListBlock>
       {todos && todos.map(todo => (
-        <TodaysTodoItem todo={todo} todos={todos} setTodos={setTodos} key={todo.id} onRemove={onRemove}/>
+        <TodaysTodoItem todo={todo} todos={todos} setTodos={setTodos} key={todo.id} onRemove={onRemove}
+                        itemsByDate={itemsByDate} setItemsByDate={setItemsByDate} dateString={dateString}/>
       ))}
     </TodoListBlock>
   );

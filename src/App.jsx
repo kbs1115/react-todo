@@ -56,6 +56,7 @@ function App() {
 
     const newObj = {};
     newObj[dateString] = newTodos;
+    console.log(newTodos);
     setItemsByDate(Object.assign(itemsByDate, newObj));
 
     setDate(new Date(date.setDate(date.getDate())));

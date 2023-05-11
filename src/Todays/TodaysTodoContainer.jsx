@@ -101,6 +101,10 @@ function TodaysTodoContainer({
 
   const onRemove = id => {
     setTodos(todos.filter(todo => todo.id !== id));
+
+    const newObj = {};
+    newObj[dateString] = itemsByDate[dateString].filter(item => item.id !== id);
+    setItemsByDate(Object.assign(itemsByDate, newObj));
   }
 
   return (
@@ -112,7 +116,8 @@ function TodaysTodoContainer({
         </Title>
         <Button onClick={handleRightButtonClick}>{'>'}</Button>
       </TitleWrapper>
-    <TodaysTodoList onRemove={onRemove} todos={todos} setTodos={setTodos}/>
+    <TodaysTodoList onRemove={onRemove} todos={todos} setTodos={setTodos} 
+                    dateString={dateString} itemsByDate={itemsByDate} setItemsByDate={setItemsByDate}/>
     <CreateTodaysTodo onChange={onChange} onCreate={onCreate} text={input}/>
     </Wrapper>
   );

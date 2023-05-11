@@ -66,7 +66,7 @@ const Text = styled.div`
     `}
 `;
 
-function TodaysTodoItem({ todo, todos, onRemove, setTodos }) {
+function TodaysTodoItem({ todo, todos, onRemove, setTodos, itemsByDate, setItemsByDate, dateString }) {
   const changeStar = (id) => {
     let newTodos = todos.map(todo =>
       todo.id === id ? {...todo, star: !todo.star} : todo)
@@ -88,6 +88,10 @@ function TodaysTodoItem({ todo, todos, onRemove, setTodos }) {
         return arr[0] - arr[1];
       });
       setTodos(newTodos);
+
+      const newObj ={};
+      newObj[dateString] = newTodos;
+      setItemsByDate(Object.assign(itemsByDate, newObj));    
   };
 
   const changeDone = (id) => {
@@ -111,6 +115,10 @@ function TodaysTodoItem({ todo, todos, onRemove, setTodos }) {
         return arr[0] - arr[1];
       });
       setTodos(newTodos);
+
+      const newObj ={};
+      newObj[dateString] = newTodos;
+      setItemsByDate(Object.assign(itemsByDate, newObj)); 
   };
 
   return (
